@@ -1,1 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>鸟人1</title>
+	<style type="text/css">
+	*{
+		padding: 0;
+		margin: 0;
+		-webkit-user-select: none;
 
+	}
+	#main{
+		width: 343px;
+		height: 480px;
+		background-image: url(img/bg.jpg);
+		position: relative;
+		overflow: hidden;
+		z-index: 100;
+
+
+	}
+	ul{
+		width: 10000000px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		
+	}
+	ul li{
+		width: 62px;
+		height: 436px;
+		display: inline-block;
+		float: left;
+		margin-left: 150px;
+		z-index: 40;
+	}
+	ul li:nth-of-type(1){
+		margin-left: 560px;
+	}
+
+	ul li img{
+		display: inline-block;
+		float: left;
+
+	}
+	p{
+		width: 62px;
+		height: 100px;
+		/*background-color: blue;*/
+		float: left;
+	}
+	#bird{
+		width: 40px;
+		height: 16px;
+		position: absolute;
+		left: 100px;
+		top: 0;
+		transition: all ;
+		transform: rotateZ(5deg);
+	}
+	#lan{
+		width: 100000px;
+		position: absolute;
+		left: 0;
+		bottom: 41px;
+		float: left;
+	}
+	#score{
+		width: 39px;
+		height: 50px;
+		position: absolute;
+		left: 150px;
+		top: 50px;
+		background-color: black;
+		color: white;
+		text-align: center;
+		font-size: 30px;
+		line-height: 50px;
+		z-index: 50;
+	}
+
+	#start{
+		width: 343px;
+		height: 480px;
+		background-image: url(img/bg.jpg);
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 101;
+	}
+	#bird0{
+		position: absolute;
+		left: 257px;
+		top: 100px;
+		z-index: 11;
+		transition:all;
+		animation: upDown 1s infinite;
+	}
+	#head{
+		position: absolute;
+		left: 80px;
+		top: 88px;
+		z-index: 10;
+		transition:all;
+		animation: upDown 1s infinite;
+	}
+
+
+	#startBtn{
+		position: absolute;
+		left: 77px;
+		top: 300px;
+	}
+	#submit{
+		position: absolute;
+		top: 300px;
+		left: 183px;
+	}
+	#ling{
+		width: 28px;
+		height: 39px;
+		position: absolute;
+		left: 150px;
+		top: 35px;
+	}
+	@keyframes upDown{
+		0%{transform: translateY(0);}
+		50%{transform: translateY(-10px);}
+		100%{transform: translateY(0);}
+	}	
+
+	#gameOver{
+		position: absolute;
+		left: 70px;
+		top: -40px;
+		z-index: 200;
+	}
+	#messAge{
+		position: absolute;
+		left: 40px;
+		top: 480px;
+		z-index: 200;
+	}
+	#ok{
+		position: absolute;
+		left: 120px;
+		top: 680px;
+		z-index: 200;
+	}
+
+	@keyframes oko{
+		0%{transform: translateY(0);}
+		1%{transform: translateY(-340px);}
+		100%{transform: translateY(-340px);}
+	}
+	@keyframes mess{
+		0%{transform: translateY(0);}
+		1%{transform: translateY(-300px);}
+		100%{transform: translateY(-300px);}
+	}
+	@keyframes game{
+		0%{transform: translateY(0);}
+		1%{transform: translateY(150px);}
+		100%{transform: translateY(150px);}
+	}
+	#fen{
+		position: absolute;
+		left: 210px;
+		top: 40px;
+		color: black;
+		font-size: 30px;
+		width: 30px;
+		height: 30px;
+	}
+
+
+	</style>
+</head>
+<body>
+	<div id="start">
+	     <img src="img/0.jpg" id="ling">
+		<img src="img/bird0.png" id="bird0">
+		<img src="img/head.jpg" id="head">
+		<button id="startBtn"><img src="img/start.jpg"></button>
+		<button id="submit"><img src="img/submit.jpg" ></button>
+	</div>
+	<div id="main">
+	    <img src="img/game_over.jpg" id="gameOver">
+		<div id="messAge">
+		<div id="fen"></div>
+		<img src="img/message.jpg" >
+		</div>
+		<button id="ok"><img src="img/ok.jpg" ></button>
+	<div id="score">
+	</div>
+		
+		<div id="bird" draggable = "false">
+			<img src="img/bird0.png" alt="" class="">
+			<audio src="bullet.mp3" id="music"></audio>
+			<audio src="game_over.mp3" id="game_over"></audio>
+		</div>
+		<div id="lan">
+			<img src="img/banner.jpg" alt="" class="">
+			<img src="img/banner.jpg" alt="" class="">
+		</div>
+		<ul>
+	</ul>
+    </div>
+	</div>
+
+
+
+
+
+		<script type="text/javascript">
+
+		var startBtn = document.getElementById("startBtn")
+		var start = document.getElementById("start")
+
+
+		startBtn.onclick = function(){
+			start.style.display= "none"
+			go()
+		}
+		function go(){
+		var ul = document.querySelector("ul")
+		var lan =document.getElementById("lan")
+		var bird = document.getElementById("bird")
+		// var listL = document.getElementsByTagName("li")
+		var p = document.getElementsByTagName("p")
+		var score = document.getElementById("score")
+		var music = document.getElementById("music")
+		var game_over =document.getElementById("game_over")
+
+
+		var index = 0;
+	    var indexB = 0;
+		var timer = setInterval(function(){
+ 
+	     banner()
+	     birdFly()
+	     pengBi()
+	     
+	     
+		 },17)
+		function banner(){ 
+			index +=2
+			indexB +=2
+			
+			if(indexB > 343){
+				lan.style.left = 0;
+				indexB = 0 ;
+			}
+
+            ul.style.left = - index + "px"
+			lan.style.left = - indexB +"px"
+			createList()
+		}
+		function rnd(min, max) {
+		return parseInt(Math.random()*(max - min + 1) + min);
+	    }      
+		function createList(){
+			if(index <200){
+			var newList = document.createElement("li")
+            var r = rnd(1,50)
+			newList.innerHTML = 
+			'<img src="img/up_mod.png" alt="" class="">'+
+			'<img src="img/up_pipe.png" alt="" class="">'+
+			'<p></p>'+
+			'<img src="img/down_pipe.png" alt="" class="">'+
+			'<img src="img/down_mod.png" alt="" class="">'					
+             ul.appendChild(newList)
+
+				 for(var i = 0; i < r ;i++){
+					var newA = document.createElement("a")
+						newA.innerHTML = '<img src= "img/up_mod.png" alt="" class="" style = "height: 2px;width:62px">'
+						newList.insertBefore(newA,newList.childNodes[0])
+					
+				}
+				for(var j = 0; j < 100 - r; j++){
+					var newB = document.createElement("a")
+						newB.innerHTML = '<img src="img/down_mod.png" alt="" class="" >';						
+						newList.appendChild(newB)
+				}
+                }
+				}
+
+
+
+		function birdFly(){
+        var birdPos = bird.getBoundingClientRect()
+			bird.style.top = indexB*1 + 100 +"px"
+		    if(birdPos.bottom > 410){
+				clearInterval(timer)
+				over()
+					game_over.currentTime = 0;
+					game_over.play();	
+			}		
+			document.onkeydown = function(e){
+				var e =e || window.event;
+				if(e.keyCode = 38){
+					bird.style.transform = "rotateZ(-5deg)"  
+					indexB = indexB - 25 
+					music.currentTime = 0;
+					music.play();			
+				}
+             document.onkeyup = function(){
+				bird.style.transform = "rotateZ(0deg)"      
+			}	
+			}
+			
+		}
+		function pengBi(){
+			var ok = document.getElementById("ok")
+			var fen = document.getElementById("fen")
+		for(var k =0;k<p.length-1; k++){
+			var pPos = p[k].getBoundingClientRect()
+			var birdPos = bird.getBoundingClientRect()
+			if((birdPos.right >= pPos.left && birdPos.left <= pPos.right && birdPos.bottom>= pPos.bottom && birdPos.top >pPos.top) || (birdPos.right >= pPos.left && birdPos.left <= pPos.right && birdPos.top<=pPos.top && birdPos.bottom<=pPos.bottom)){
+				bird.style.top =400+"px"
+				clearInterval(timer)
+				over()
+				game_over.currentTime = 0;
+					game_over.play();	
+
+			}
+			if(birdPos.right > pPos.right){
+				score.innerHTML = k;
+				fen.innerHTML = k;
+			}
+
+
+            }
+           }
+
+}
+		var messAge = document.getElementById("messAge")
+		var ok = document.getElementById("ok")
+		var gameOver = document.getElementById("gameOver")
+		
+		function over(){
+			ok.style.animation = 'oko'+' '+'100s' 
+			messAge.style.animation = 'mess'+' '+'100s' 
+			gameOver.style.animation = 'game'+' '+'100s' 
+		}
+		ok.onclick = function(){
+			window.location.reload();
+
+		}
+		</script>
+
+
+
+
+	
+</body>
+</html>
